@@ -36,8 +36,8 @@ class Circuit:
     def __init__(self, name: str):
         self.name = name
         self.buses: Dict[str, Bus] = dict()
-        self.resistors = {}
-        self.loads = {}
+        self.resistors: Dict[str, Resistor] = {}
+        self.loads: Dict[str, Load] = {}
         self.vsource = None
         self.i = 0.0
 

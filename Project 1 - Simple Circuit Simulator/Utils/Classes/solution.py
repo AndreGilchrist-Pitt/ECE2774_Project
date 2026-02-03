@@ -43,18 +43,9 @@ class Solution:
         # Calculate voltage at bus B
         v_bus_b = self._circuit.vsource.v - v_drop
 
-        # Set voltage at bus A
-        bus_a = self._circuit.vsource.bus1
-        bus_a.set_bus_v(self._circuit.vsource.v)
-
-        # Set voltage at bus B
-        load = loads[0]
-        bus_b = load.bus1
-        bus_b.set_bus_v(v_bus_b)
-
-        #move to circuit class
-        #self.circuit.print_nodal_voltage()
-        #self.circuit.print_circuit_current()
+        # Set voltage at bus B (connected to loads)
+        for load in loads:
+            load.bus1.set_bus_v(v_bus_b)
 
 if __name__ == "__main__":
     circuit = Circuit("circuit1")
