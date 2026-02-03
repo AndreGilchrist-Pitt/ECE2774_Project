@@ -8,6 +8,9 @@ This is an introductory example program to:
 ## Note
 Folder /Utils contains
 1. /Classes: classes used in simulation
-2. /Documentation: reference material  
+2. /Documentation: reference material 
+    - Documentation Included:
+        - Class Diagram
+        - Project Overview  
 ## Simulation
 **main.py** is available for simulation example
