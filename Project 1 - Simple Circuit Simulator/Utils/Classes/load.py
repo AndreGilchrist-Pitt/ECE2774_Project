@@ -12,9 +12,9 @@ Load:
     Methods:
         calc_g(): Calculates the conductance value
 '''
-
+from Utils.Classes.bus import Bus
 class Load:
-    def __init__(self,name: str,bus1: str,p: float, v: float ):
+    def __init__(self,name: str,bus1: Bus,p: float, v: float ):
         self.name = name
         self.bus1 = bus1
         self.p = p

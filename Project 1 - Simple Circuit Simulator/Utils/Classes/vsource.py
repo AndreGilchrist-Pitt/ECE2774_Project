@@ -6,9 +6,9 @@ VSource:
         bus1 (str): The user should provide this as an argument when defining the object.
         v (float): The user should provide this as an argument when defining the object.
 '''
-
+from Utils.Classes.bus import Bus
 class VSource:
-    def __init__(self, name: str, bus1: str, v: float):
+    def __init__(self, name: str, bus1: Bus, v: float):
         self.name = name
         self.bus1 = bus1
         self.v = v

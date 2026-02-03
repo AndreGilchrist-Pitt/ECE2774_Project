@@ -11,9 +11,9 @@ Resistor:
         set_bus_v(bus_v: float): Sets the voltage at the bus
 '''
 
-
+from Utils.Classes.bus import Bus
 class Resistor:
-    def __init__(self, name: str, bus1: str, bus2: str, r: float):
+    def __init__(self, name: str, bus1: Bus, bus2: Bus, r: float):
         self.name = name
         self.bus1 = bus1
         self.bus2 = bus2

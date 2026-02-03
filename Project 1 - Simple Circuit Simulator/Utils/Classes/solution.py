@@ -15,37 +15,41 @@ Class implementation:
                             specifically for this circuit, as the main goal is to understand the coding
                             implementation.
 '''
-from Utils.Classes.Circuit import Circuit
+from Utils.Classes.circuit import Circuit
 
 
 class Solution:
     def __init__(self, circuit: Circuit):
-        self.circuit = circuit
+        self._circuit = circuit
 
     def do_power_flow(self):
         # Get the resistor and load from dictionaries
-        resistor = list(self.circuit.resistors.values())[0]
-        load = list(self.circuit.loads.values())[0]
+        resistors = list(self._circuit.resistors.values())
+        loads = list(self._circuit.loads.values())
+        elements = resistors + loads
+        if not elements:
+            raise ValueError("Circuit must contain at least one resistor or load")
 
         # Calculate circuit conductance
-        total_g = 1/(1/resistor.g + 1/load.g)
+        total_g = 1 / sum(1 / element.g for element in elements)
 
         # Calculate circuit current (I = V * G)
-        current = self.circuit.vsource.v * total_g
-        self.circuit.set_i(current)
+        current = self._circuit.vsource.v * total_g
+        self._circuit.set_i(current)
 
-        # Calculate voltage drop across the series resistor
-        v_drop = current / resistor.g
+        # Calculate total voltage drop across series resistors
+        v_drop = sum(current / resistor.g for resistor in resistors)
 
         # Calculate voltage at bus B
-        v_bus_b = self.circuit.vsource.v - v_drop
+        v_bus_b = self._circuit.vsource.v - v_drop
 
         # Set voltage at bus A
-        bus_a = self.circuit.buses[self.circuit.vsource.bus1]
-        bus_a.set_bus_v(self.circuit.vsource.v)
+        bus_a = self._circuit.vsource.bus1
+        bus_a.set_bus_v(self._circuit.vsource.v)
 
         # Set voltage at bus B
-        bus_b = self.circuit.buses[load.bus1]
+        load = loads[0]
+        bus_b = load.bus1
         bus_b.set_bus_v(v_bus_b)
 
         #move to circuit class
@@ -56,8 +60,8 @@ if __name__ == "__main__":
     circuit = Circuit("circuit1")
     circuit.add_bus("bus1")
     circuit.add_bus("bus2")
-    circuit.add_resistor_element("resistor1", "bus1", "bus2", 5)
-    circuit.add_load_element("load1", "bus2", 2000, 100)
-    circuit.add_vsource_element("vsource1", "bus1", 100)
+    circuit.add_resistor_element("resistor1", circuit.buses["bus1"], circuit.buses["bus2"], 5)
+    circuit.add_load_element("load1", circuit.buses["bus2"], 2000, 100)
+    circuit.add_vsource_element("vsource1", circuit.buses["bus1"], 100)
     solution = Solution(circuit)
     solution.do_power_flow()

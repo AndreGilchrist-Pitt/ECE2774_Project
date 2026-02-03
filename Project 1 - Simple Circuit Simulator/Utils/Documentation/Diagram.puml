@@ -9,8 +9,8 @@ class Bus {
 
 class Resistor {
     +name: str
-    +bus1: str
-    +bus2: str
+    +bus1: Bus
+    +bus2: Bus
     +r: float
     +g: float
     +calc_g(): float
@@ -18,7 +18,7 @@ class Resistor {
 
 class Load {
     +name: str
-    +bus1: str
+    +bus1: Bus
     +p: float
     +v: float
     +q: float
@@ -29,7 +29,7 @@ class Load {
 
 class VSource {
     +name: str
-    +bus1: str
+    +bus1: Bus
     +v: float
 }
 
